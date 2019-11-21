@@ -1,0 +1,36 @@
+flow forget password and send email
+- not logged in
+- provide email via a form
+- we have to check the availability of email
+- generate a token
+- send email with a token to that user 
+- prepare a page to verify token =>
+form to collect new password 
+-we set new password => redirect user to login page
+
+
+
+personal note:
+create 2 blueprint.route: forget password (ask for reset password) and reset password (after reset password)
+
++ use itdangerous python
+- def forgetpassword: 
+code:
+s = URLSafeTimedSerializer(app.secret_key)
+token = s.dumps(user.email, salt="RESET_PASSWORD")
+send_email(token,user.email)
+- def resetpassword: 
+code:
+s = URLSafeTimedSerializer(app.secret_key)
+email = s.loads(token, salt="RESET_PASSWORD", max_age=300)
++ register mailgun and create function to send email
+
+function send_email
+go to mailgun and choose set api
+
++ requests python:
+- read more this page
+https://realpython.com/python-requests/
+
+
+
