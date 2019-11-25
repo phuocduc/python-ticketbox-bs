@@ -2,6 +2,7 @@ from flask import Blueprint, render_template,request,flash,redirect,url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from src import db, app
 from src.models.user import User
+from src.models.event import Event, Ticket
 from itsdangerous import URLSafeSerializer,URLSafeTimedSerializer
 import requests
 from requests.exceptions import HTTPError
@@ -47,25 +48,25 @@ def register():
     return render_template('user/register.html')
 
 
-@user_blueprint.route('/ticket/profile')
+@user_blueprint.route('/home')
 @login_required
-def profile():
-    
-    return render_template('user/profile.html')
+def main():
+    events = Event.query.all()
+    return render_template('home/home.html', events = events)
 
 
 @user_blueprint.route('/', methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
         flash("success")
-        return redirect(url_for('users.profile'))
+        return redirect(url_for('users.main'))
     if request.method == "POST":
         user = User.query.filter_by(email=request.form['email']).first()
         if user:
             if user.check_password(request.form['password']):
                 login_user(user)
                 print("welcome {0}".format(user.email), 'success')
-                return redirect(url_for('users.profile'))
+                return redirect(url_for('users.main'))
         flash("email invalid")
         return redirect(url_for('users.login'))
     return render_template('user/login.html')

@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'user/profile.html' %}
 
-{% block homepage %}
+{% block home_page %}
 {% for event in events %}
 {% if event.active == True %}
 
-<div class="card" style="width: 18rem;">
+<div class="card m-2" style="width: 18rem;">
     <img src={{event.img_pic}} class="card-img-top" alt="...">
     <div class="card-body">
         <div class="border-top-grey col-sm-12">

@@ -6,12 +6,6 @@ from src import db
 event_blueprint = Blueprint('event',__name__, template_folder='../../templates')
 
 
-@event_blueprint.route('/home')
-@login_required
-def home_page():
-    events = Event.query.all()
-
-    return render_template('home/home.html', events = events)
 
 @event_blueprint.route('/event', methods=['GET','POST'])
 @login_required
@@ -39,9 +33,14 @@ def show_ticket_page(id):
 @event_blueprint.route('/render/<id>', methods=['GET', 'POST'])
 def delete_event(id):
     event = Event.query.filter_by(id = id).first()
-    db.session.delete(event)
-    db.session.commit()
-    return render_template('user/profile.html')
+    if event.ticket:
+        print("please delete ticket first")
+        return redirect(url_for('event.render_event'))
+    if not event.ticket:
+        db.session.delete(event)
+        db.session.commit()
+        return redirect(url_for('event.render_event'))
+    return render_template('event/show_event.html')
 
 
 @event_blueprint.route('/event/<event_id>/tickets/<ticket_id>', methods=['GET', 'POST'])
@@ -74,7 +73,7 @@ def active_event(event_id):
 @event_blueprint.route('/render')
 def render_event():
     events = Event.query.all()
-    return render_template('user/profile.html',events = events)
+    return render_template('event/show_event.html',events = events)
 
 
 @event_blueprint.route('/event/<id>/tickets')
