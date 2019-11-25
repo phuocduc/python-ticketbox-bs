@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block createTicket %}
+<div class="card card_event">
+    <div class="card_inner">
+        <div class="card-body">
+            <h5 class="card-title">Create Ticket</h5>
+        </div>
+
+        <form method="POST">
+            <ul class="list-group list-group-flush">
+                <input class="m-1 event_input" type="text" name="ticket_name" placeholder="Name">
+                <input class="m-1 event_input" type="text" name="ticket_price" placeholder="Price">
+                <input class="m-1 event_input" type="text" name="ticket_stock" placeholder="Stock">
+                
+            </ul>
+            <div class="card-body">
+                <button type="submit" class="btn btn-outline-primary">Create Ticket</button>
+               
+                <a href="{{url_for('event.active_event', event_id =event_id)}}" class="btn btn-outline-primary">Active</a>
+                
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+
+    {% endblock  %}

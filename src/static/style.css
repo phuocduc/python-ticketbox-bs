@@ -1,0 +1,31 @@
+.card_event{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #00000047;
+}
+
+.card_inner{
+    width: 33%;
+    border: solid;
+    padding: 8px;
+    border-radius: 13px;
+    background-color: white;
+}
+
+.event_input{
+    border-radius: 5px;
+    height: 2rem;
+}
+
+.event_select{
+    border-radius: 5px;
+    height: 2rem;
+    width: 40%;
+}
+
+.flex_dropdown_border_event{
+    margin-right: 5px;
+    justify-content: flex-end;
+}

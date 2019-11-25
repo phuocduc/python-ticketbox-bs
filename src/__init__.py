@@ -5,10 +5,10 @@ from flask_login import LoginManager, current_user
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
-
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 db = SQLAlchemy(app)
 
-from src.models.user import User
+from src.models import User,Event,Order, Rating, Ticket
 
 migrate = Migrate(app,db)
 
@@ -26,9 +26,8 @@ def load_user(id):
 from src.components.user import user_blueprint
 app.register_blueprint(user_blueprint, url_prefix="/")
 
-# from src.components.event import event_blueprint
-# app.register_blueprint(event_blueprint, url_prefix="/event")
-
+from src.components.event import event_blueprint
+app.register_blueprint(event_blueprint, url_prefix="/")
 
 # @app.route('/')
 # def root():

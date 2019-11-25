@@ -11,7 +11,7 @@ from requests.exceptions import HTTPError
 user_blueprint = Blueprint('users', __name__,template_folder='../../templates')
 
 def send_email(token,email):
-    url= "https://api.mailgun.net/v3/sandbox172ed4b367ea4418b3ef4ee81fc88b7b.mailgun.org/messages"
+    url= "https://api.mailgun.net/v3/sandbox172ed4b367ea4418b3ef4ee81fc88b7b.mai/messages"
     try:
         response = requests.post(url,
             auth=("api", app.config['API_EMAIL']),
@@ -31,9 +31,6 @@ def send_email(token,email):
         print('Success!')
 
 
-@user_blueprint.route('/')
-def root():
-    return render_template('user/index.html')
 
 @user_blueprint.route('/register', methods=['GET','POST'])
 def register():
@@ -42,7 +39,7 @@ def register():
         if user:
             flash("email has already register")
             return redirect(url_for('register'))
-        new_user = User(email = request.form['email'])
+        new_user = User(email = request.form['email'], username= request.form['username'])
         new_user.set_password(request.form['password'])
         db.session.add(new_user)
         db.session.commit()
@@ -50,24 +47,25 @@ def register():
     return render_template('user/register.html')
 
 
-@user_blueprint.route('/mainpage')
-def main_page():
-    return render_template('user/mainpage.html')
+@user_blueprint.route('/ticket/profile')
+@login_required
+def profile():
+    
+    return render_template('user/profile.html')
 
 
-@user_blueprint.route('/login', methods=['GET','POST'])
+@user_blueprint.route('/', methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
         flash("success")
-        return redirect(url_for('users.main_page'))
+        return redirect(url_for('users.profile'))
     if request.method == "POST":
         user = User.query.filter_by(email=request.form['email']).first()
-        print(user.email)
         if user:
             if user.check_password(request.form['password']):
                 login_user(user)
                 print("welcome {0}".format(user.email), 'success')
-                return redirect(url_for('users.main_page'))
+                return redirect(url_for('users.profile'))
         flash("email invalid")
         return redirect(url_for('users.login'))
     return render_template('user/login.html')
@@ -87,6 +85,7 @@ def forget():
         s = URLSafeTimedSerializer(app.secret_key)
         token = s.dumps(user.email, salt="RESET_PASSWORD")
         send_email(token,user.email)
+        print(token)
         print("OK")
         return redirect(url_for('users.login'))
     return render_template('user/forget.html')
@@ -113,4 +112,4 @@ def reset_password(token):
 @user_blueprint.route('/logout')
 def log_out():
     logout_user()
-    return render_template('user/index.html')
+    return render_template('user/login.html')

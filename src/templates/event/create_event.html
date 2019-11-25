@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block createEvent %}
+<div class="card card_event">
+    <div class="card_inner">
+        <div class="card-body">
+          <h5 class="card-title">Create Events</h5>
+        </div>
+      
+        <form method="POST">
+            <ul class="list-group list-group-flush">
+                <input class="m-1 event_input" type="text" name="event_name" placeholder="Event Name">
+                <input class="m-1 event_input" type="text" name="event_location" placeholder="Event Location">
+                <input class="m-1 event_input" type="text" name="event_address" placeholder="Address">
+                <input class="m-1 event_input" type="text" name="event_img" placeholder="URL Picture">
+                <input class="m-1 event_input" type="date" name="event_date" placeholder="mm/yy/dd">
+
+                <div class="d-flex flex_dropdown_border_event">
+                    <select name="event_dropdown" class="event_select">
+                        <option value="live music">Live music</option>
+                        <option value="Culture and arts">Culture and arts</option>
+                        <option value="Night Life">Night Life</option>
+                        <option value="Stage">Stage</option>
+                    </select>
+                </div>
+            </ul>
+            <div class="card-body">
+                <button type="submit" class="btn btn-outline-primary">Create Event</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+    {% endblock  %}

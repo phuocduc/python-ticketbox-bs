@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block homepage %}
+{% for event in events %}
+{% if event.active == True %}
+
+<div class="card" style="width: 18rem;">
+    <img src={{event.img_pic}} class="card-img-top" alt="...">
+    <div class="card-body">
+        <div class="border-top-grey col-sm-12">
+            <h5 class="card-title">{{event.event_name}}</h5>
+            <p class="grey-dark-color text-bold text-indent m-0">
+                <i class="fas fa-map-marker-alt"></i>
+                <b>{{event.location}}</b>
+            </p>
+            <p class="grey-white-color">
+                {{event.address}}
+            </p>
+            <p class="grey-white-color">
+                {{event.event_type}}
+            </p>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endblock  %}

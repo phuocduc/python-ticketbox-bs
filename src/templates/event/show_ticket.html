@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block show_ticket %}
+{% for ticket in tickets %}
+    
+
+<div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <div class="border-top-grey col-sm-12">
+                <h5 class="card-title">{{ticket.name}}</h5>
+                <p class="grey-dark-color text-bold text-indent m-0">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <b>{{ticket.price}}</b>
+                </p>
+                <p class="grey-white-color">
+                   {{ticket.stock}}
+                </p>
+               <a method="POST" href="{{url_for('event.delete_ticket', event_id=ticket.event_id, ticket_id = ticket.id)}}">Delete</a>
+            </div>
+        </div>
+    </div>
+    
+{% endfor %}
+{% endblock  %}
+
+
+
+

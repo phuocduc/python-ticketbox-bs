@@ -1,16 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Forget Password</title>
-</head>
-<body>
-    <form action="" method="POST">
-        <label for="">Email</label>
-        <input type="email" name="email">
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block forgetPassword %}
+
+
+    <div class="w-100">
+            <div class="modal-header dl-one-header">
+                <div class="modal-hl">
+                    <h4 class="modal-title font-bold"><font style="vertical-align: inherit;">Forgot password</font></h4>
+                </div>
+
+
+                <div class="modal-hr">
+                    <span class="color-6"><font style="vertical-align: inherit;">Or </font></span> <a data-toggle="modal" data-target="[modal='signin-modal']" data-dismiss="modal" class="tkb-color underline"><font style="vertical-align: inherit;"><a href="/">Login</a></font></a>
+                </div>
+            </div>
+            <div class="modal-body mover-up-actions">
+                <div data-err="alerter" class="dl-er-message hide">
+                    <div class="alert alert-warning" role="alert">
+                        <span data-err="message"><font style="vertical-align: inherit;">Opps!</font></span>
+                    </div>
+                </div>
+
+
+                <form method="POST">
+                            <input required="true" name="email" type="email" class="form-control padding-left-0" placeholder="Email">
+                <button type="submit" class="ladda-button btn tkb-bg-color rounded w-100 font-bold"><font style="vertical-align: inherit;">Completed</font></button>
+        </form>
+
+        </div>
+{% endblock  %}
